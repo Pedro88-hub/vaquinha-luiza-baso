@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Campanha de apoio moral para a Luiza Baso — uma brincadeira entre amigos. Sem pagamentos reais.">
+  <title>Vaquinha da Luiza Baso — R$ 142</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Fredoka:wght@500;600;700&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="bg-blobs" aria-hidden="true">
+    <div class="bg-blob bg-blob--1"></div>
+    <div class="bg-blob bg-blob--2"></div>
+    <div class="bg-blob bg-blob--3"></div>
+  </div>
+  <div id="emoji-layer" aria-hidden="true"></div>
+  <canvas id="confetti-canvas" aria-hidden="true"></canvas>
+
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker__track">
+      <span>🐮 Zero reais arrecadados</span>
+      <span>❤️ 100% apoio emocional</span>
+      <span>💸 R$ 142 em memórias</span>
+      <span>🤝 Cada clique = 1 abraço virtual</span>
+      <span>☕ Comentários = cafés imaginários</span>
+      <span>🎭 Brincadeira entre amigos</span>
+      <span>🐮 Zero reais arrecadados</span>
+      <span>❤️ 100% apoio emocional</span>
+      <span>💸 R$ 142 em memórias</span>
+      <span>🤝 Cada clique = 1 abraço virtual</span>
+      <span>☕ Comentários = cafés imaginários</span>
+      <span>🎭 Brincadeira entre amigos</span>
+    </div>
+  </div>
+
+  <header class="header">
+    <div class="container header__inner">
+      <div class="header__brand">
+        <span class="header__logo" aria-hidden="true">🐮</span>
+        <span class="header__name">Vaquinha da Luiza Baso</span>
+        <span class="live-dot" title="Campanha ativa">ao vivo</span>
+      </div>
+      <div class="header__meta">
+        <span class="badge badge--joke">🎭 Brincadeira entre amigos</span>
+        <span class="visitor-pill" id="visitor-count">👀 0 visitantes</span>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero__grid">
+        <div class="hero__content reveal">
+          <p class="hero__tag">
+            <span class="hero__tag-icon">✨</span>
+            Campanha oficial da Luiza Baso · verificada pelo coração
+          </p>
+          <h1 class="hero__title">
+            Ajude a Luiza Baso a recuperar os
+            <span class="hero__highlight">R$&nbsp;142</span>
+            perdidos no golpe
+          </h1>
+          <blockquote class="hero__subtitle">
+            Como o dinheiro não voltou, estamos arrecadando apoio emocional para a nossa guerreira.
+          </blockquote>
+
+          <div class="hero__chips">
+            <span class="hero-chip">🫶 Apoio moral</span>
+            <span class="hero-chip">🚫 Sem PIX</span>
+            <span class="hero-chip">😂 Só zoeira</span>
+          </div>
+
+          <div class="hero__profile reveal">
+            <img class="hero__photo" src="assets/luiza.jpg" alt="Foto da Luiza Baso" width="88" height="88">
+            <div class="hero__profile-text">
+              <strong>Luiza Baso</strong>
+              <span>Guerreira oficial desta vaquinha</span>
+            </div>
+          </div>
+
+          <div class="story card card--interactive reveal reveal--delay-1">
+            <h2 class="story__title">📖 A história</h2>
+            <p>
+              A <strong>Luiza Baso</strong> caiu em um golpe e perdeu <strong>R$ 142</strong>. Como não
+              conseguimos convencer o banco a devolver o valor, decidimos iniciar uma campanha de
+              apoio moral para restaurar a fé dela na humanidade.
+            </p>
+            <p>
+              Cada curtida vale <em>um abraço virtual pra Luiza</em>. Cada comentário vale <em>um café
+              imaginário</em>. E cada visita prova que a internet ainda tem gente boa — ou pelo
+              menos gente com tempo livre pra zoar com carinho.
+            </p>
+            <p class="story__footnote">
+              ⚠️ Esta página <strong>não aceita dinheiro</strong>, PIX, cartão, boleto ou qualquer
+              forma de pagamento. É só zoeira com carinho.
+            </p>
+          </div>
+        </div>
+
+        <aside class="hero__sidebar reveal reveal--delay-2">
+          <div class="campaign-card card card--glow" id="campaign-card">
+            <div class="campaign-card__shine" aria-hidden="true"></div>
+            <p class="campaign-card__beneficiary">Beneficiária: <strong>Luiza Baso</strong></p>
+            <div class="campaign-card__image">
+              <div class="campaign-card__orbit">
+                <span class="orbit-emoji orbit-emoji--1">💔</span>
+                <span class="orbit-emoji orbit-emoji--2">✨</span>
+                <span class="orbit-emoji orbit-emoji--3">❤️</span>
+              </div>
+              <img class="campaign-card__photo" id="hero-photo" src="assets/luiza.jpg" alt="Luiza Baso — beneficiária da campanha" width="140" height="140">
+            </div>
+
+            <div class="progress-block">
+              <div class="progress-block__numbers">
+                <span class="progress-block__current" id="likes-count">0</span>
+                <span class="progress-block__goal">de 142 apoios</span>
+              </div>
+              <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="142" aria-valuenow="0" id="progress-bar">
+                <div class="progress-bar__fill" id="progress-fill">
+                  <span class="progress-bar__sparkle" aria-hidden="true"></span>
+                </div>
+              </div>
+              <p class="progress-block__percent" id="progress-percent">0% da meta de apoio moral</p>
+            </div>
+
+            <button class="btn btn--primary btn--pulse" id="like-btn" type="button">
+              <span class="btn__icon">🤝</span>
+              <span class="btn__label">Contribuir com Apoio</span>
+              <span class="btn__ripple" aria-hidden="true"></span>
+            </button>
+
+            <p class="campaign-card__hint" id="like-hint">Cada clique = +1 curtida. Sem cobrança, sem culpa.</p>
+
+            <label class="sound-toggle">
+              <input type="checkbox" id="sound-toggle">
+              <span class="sound-toggle__track">
+                <span class="sound-toggle__thumb"></span>
+              </span>
+              <span>🔊 Efeitos sonoros</span>
+            </label>
+          </div>
+
+          <div class="stats card card--interactive reveal reveal--delay-3" id="fun-stats">
+            <h3 class="stats__title">📊 Estatísticas científicas*</h3>
+            <ul class="stats__list" id="stats-list"></ul>
+            <p class="stats__disclaimer">*Nível de ciência: meme.</p>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section battle-section">
+      <div class="container">
+        <div class="battle-header reveal">
+          <h2 class="battle-header__title">⚔️ Batalha Épica</h2>
+          <p class="battle-header__desc">Luiza Baso vs. o Golpista dos R$ 142 — cada apoio é um golpe de carinho!</p>
+        </div>
+
+        <div class="battle-arena card reveal reveal--delay-1" id="battle-arena">
+          <div class="battle-arena__glow" aria-hidden="true"></div>
+          <div class="battle-arena__vs" aria-hidden="true">VS</div>
+
+          <div class="fighter-card fighter-card--luiza" id="fighter-luiza">
+            <div class="fighter-card__badge">HERÓI</div>
+            <div class="fighter-card__avatar">
+              <img src="assets/luiza.jpg" alt="Luiza Baso">
+            </div>
+            <h3 class="fighter-card__name">Luiza Baso</h3>
+            <p class="fighter-card__class">Guerreira do Apoio Moral</p>
+            <div class="fighter-hp">
+              <div class="fighter-hp__label">
+                <span>HP do Coração</span>
+                <strong id="luiza-hp-text">10%</strong>
+              </div>
+              <div class="fighter-hp__bar">
+                <div class="fighter-hp__fill fighter-hp__fill--luiza" id="luiza-hp-fill"></div>
+              </div>
+            </div>
+            <ul class="fighter-stats">
+              <li><span>💪 Resiliência</span><strong>99</strong></li>
+              <li><span>❤️ Carinho</span><strong id="luiza-carinho">0</strong></li>
+              <li><span>🛡️ Escudo emocional</span><strong id="luiza-shield">Frágil</strong></li>
+            </ul>
+          </div>
+
+          <div class="battle-fx" id="battle-fx" aria-live="polite" aria-atomic="true"></div>
+
+          <div class="fighter-card fighter-card--scammer" id="fighter-scammer">
+            <div class="fighter-card__badge fighter-card__badge--enemy">VILÃO</div>
+            <div class="fighter-card__avatar fighter-card__avatar--enemy">
+              <span class="fighter-card__mask" aria-hidden="true">🦹</span>
+            </div>
+            <h3 class="fighter-card__name">Golpista Anônimo</h3>
+            <p class="fighter-card__class">Mestre do PIX Falso</p>
+            <div class="fighter-hp">
+              <div class="fighter-hp__label">
+                <span>HP da Maldade</span>
+                <strong id="scammer-hp-text">100%</strong>
+              </div>
+              <div class="fighter-hp__bar">
+                <div class="fighter-hp__fill fighter-hp__fill--scammer" id="scammer-hp-fill" style="width: 100%"></div>
+              </div>
+            </div>
+            <ul class="fighter-stats">
+              <li><span>😈 Maldade</span><strong>142</strong></li>
+              <li><span>💸 Roubo</span><strong>R$ 142</strong></li>
+              <li><span>🏃 Fuga</span><strong id="scammer-flee">Alta</strong></li>
+            </ul>
+          </div>
+        </div>
+
+        <p class="battle-hint reveal reveal--delay-2" id="battle-hint">Clique em "Contribuir com Apoio" para a Luiza atacar o golpista! 🥊</p>
+      </div>
+    </section>
+
+    <section class="section" id="goal-section" hidden>
+      <div class="container">
+        <div class="goal-celebration card reveal" id="goal-celebration">
+          <div class="goal-celebration__confetti-bg" aria-hidden="true"></div>
+          <div class="goal-celebration__icon" aria-hidden="true">🎉</div>
+          <h2 class="goal-celebration__title">Meta alcançada!</h2>
+          <blockquote class="goal-celebration__quote">
+            O dinheiro não voltou, Luiza Baso, mas o apoio da galera compensou.
+          </blockquote>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container section__grid">
+        <div class="section__main reveal">
+          <div class="card comments-card card--interactive">
+            <h2 class="section__title">💬 Mural de apoio</h2>
+            <p class="section__desc">Deixe sua mensagem pra Luiza e entre pro ranking dos heróis do coração.</p>
+
+            <form class="comment-form" id="comment-form">
+              <div class="comment-form__row">
+                <label class="field">
+                  <span class="field__label">Seu nome</span>
+                  <input class="field__input" type="text" id="comment-name" placeholder="Ex: Amigo da Luiza" maxlength="40" required>
+                </label>
+              </div>
+              <label class="field">
+                <span class="field__label">Mensagem de apoio</span>
+                <textarea class="field__input field__textarea" id="comment-text" rows="3" placeholder="Ex: Luiza, você não está sozinha nessa batalha." maxlength="280" required></textarea>
+              </label>
+              <div class="comment-form__actions">
+                <button class="btn btn--secondary" type="submit">Publicar apoio ✨</button>
+                <div class="quick-messages">
+                  <span class="quick-messages__label">Sugestões:</span>
+                  <button type="button" class="chip" data-msg="Luiza, você não está sozinha nessa batalha.">💪</button>
+                  <button type="button" class="chip" data-msg="Luiza, os R$ 142 viraram história.">📖</button>
+                  <button type="button" class="chip" data-msg="Luiza, o verdadeiro patrimônio são os amigos.">👯</button>
+                  <button type="button" class="chip" data-msg="Luiza, o golpista que lute!">⚔️</button>
+                </div>
+              </div>
+            </form>
+
+            <ul class="comments-list" id="comments-list"></ul>
+            <p class="comments-empty" id="comments-empty">Seja a primeira pessoa a deixar um apoio pra Luiza! 🫶</p>
+          </div>
+        </div>
+
+        <aside class="section__aside">
+          <div class="card badges-card card--interactive reveal reveal--delay-1">
+            <h2 class="section__title section__title--sm">🏅 Conquistas</h2>
+            <ul class="badges-list" id="badges-list"></ul>
+          </div>
+
+          <div class="card ranking-card card--interactive reveal reveal--delay-2">
+            <h2 class="section__title section__title--sm">🥇 Ranking de apoiadores</h2>
+            <p class="ranking-card__desc">Fictício, mas o carinho é real.</p>
+            <ol class="ranking-list" id="ranking-list"></ol>
+            <p class="ranking-empty" id="ranking-empty">Ainda sem apoiadores. Você pode ser o primeiro!</p>
+          </div>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <p class="footer__emoji" aria-hidden="true">🐮💚🎭</p>
+      <p>
+        <strong>Brincadeira entre amigos.</strong> Este site não solicita, processa ou arrecada
+        dinheiro de qualquer forma. Nenhum PIX, cartão, boleto ou QR Code foi ferido na produção
+        desta página.
+      </p>
+      <p class="footer__small">Feito com carinho e zero reais. © Vaquinha da Luiza Baso</p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
