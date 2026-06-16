@@ -2,7 +2,9 @@
 
 Página humorística inspirada em plataformas de vaquinha online — **sem pagamentos reais**.
 
-## Como executar
+**Site publicado:** https://pedro88-hub.github.io/vaquinha-luiza-baso/
+
+## Como executar localmente
 
 Abra o arquivo `index.html` no navegador:
 
