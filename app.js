@@ -128,6 +128,9 @@
     }
     saveState();
 
+    const soundPref = localStorage.getItem("vaquinha-sound");
+    els.soundToggle.checked = soundPref !== "false";
+
     renderAll();
     bindEvents();
     initScrollReveal();
@@ -169,7 +172,8 @@
     });
 
     els.soundToggle.addEventListener("change", () => {
-      if (els.soundToggle.checked) initAudio();
+      localStorage.setItem("vaquinha-sound", els.soundToggle.checked ? "true" : "false");
+      if (els.soundToggle.checked) void initAudio();
     });
   }
 
@@ -528,53 +532,61 @@
     }
   }
 
-  function initAudio() {
+  async function initAudio() {
     if (!audioCtx) {
       audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     }
-    if (audioCtx.state === "suspended") audioCtx.resume();
+    if (audioCtx.state === "suspended") {
+      await audioCtx.resume();
+    }
   }
 
   function playSound(type) {
     if (!els.soundToggle.checked) return;
-    initAudio();
-    if (!audioCtx) return;
+    void playSoundAsync(type);
+  }
 
-    const now = audioCtx.currentTime;
-    const osc = audioCtx.createOscillator();
-    const gain = audioCtx.createGain();
-    osc.connect(gain);
-    gain.connect(audioCtx.destination);
+  async function playSoundAsync(type) {
+    try {
+      await initAudio();
+      if (!audioCtx || audioCtx.state !== "running") return;
 
-    if (type === "like") {
-      osc.frequency.setValueAtTime(520, now);
-      osc.frequency.exponentialRampToValueAtTime(780, now + 0.08);
-      gain.gain.setValueAtTime(0.12, now);
-      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
-      osc.start(now);
-      osc.stop(now + 0.15);
-    } else if (type === "comment") {
-      osc.frequency.setValueAtTime(400, now);
-      osc.frequency.exponentialRampToValueAtTime(600, now + 0.1);
-      osc.frequency.exponentialRampToValueAtTime(500, now + 0.2);
-      gain.gain.setValueAtTime(0.1, now);
-      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
-      osc.start(now);
-      osc.stop(now + 0.25);
-    } else if (type === "celebration") {
-      [0, 0.1, 0.2, 0.3].forEach((delay, i) => {
-        const o = audioCtx.createOscillator();
-        const g = audioCtx.createGain();
-        o.connect(g);
-        g.connect(audioCtx.destination);
-        const freq = [523, 659, 784, 1047][i];
-        o.frequency.setValueAtTime(freq, now + delay);
-        g.gain.setValueAtTime(0.1, now + delay);
-        g.gain.exponentialRampToValueAtTime(0.001, now + delay + 0.2);
-        o.start(now + delay);
-        o.stop(now + delay + 0.2);
-      });
-    }
+      const now = audioCtx.currentTime;
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+
+      if (type === "like") {
+        osc.frequency.setValueAtTime(520, now);
+        osc.frequency.exponentialRampToValueAtTime(780, now + 0.08);
+        gain.gain.setValueAtTime(0.2, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
+        osc.start(now);
+        osc.stop(now + 0.15);
+      } else if (type === "comment") {
+        osc.frequency.setValueAtTime(400, now);
+        osc.frequency.exponentialRampToValueAtTime(600, now + 0.1);
+        osc.frequency.exponentialRampToValueAtTime(500, now + 0.2);
+        gain.gain.setValueAtTime(0.18, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+        osc.start(now);
+        osc.stop(now + 0.25);
+      } else if (type === "celebration") {
+        [0, 0.1, 0.2, 0.3].forEach((delay, i) => {
+          const o = audioCtx.createOscillator();
+          const g = audioCtx.createGain();
+          o.connect(g);
+          g.connect(audioCtx.destination);
+          const freq = [523, 659, 784, 1047][i];
+          o.frequency.setValueAtTime(freq, now + delay);
+          g.gain.setValueAtTime(0.18, now + delay);
+          g.gain.exponentialRampToValueAtTime(0.001, now + delay + 0.2);
+          o.start(now + delay);
+          o.stop(now + delay + 0.2);
+        });
+      }
+    } catch (_) {}
   }
 
   function launchConfetti() {
